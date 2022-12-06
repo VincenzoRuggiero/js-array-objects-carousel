@@ -30,12 +30,40 @@ const imgDiv = document.querySelector(".carousel-image");
 const btnUp = document.querySelector(".previous");
 const btnDown = document.querySelector(".next");
 
+let i = 0;
+
+next();
+previous();
+
 images.forEach((image, index) => {
   let currentImg = image.image;
-  let imgItem = document.createElement("div");
-  imgItem.classList.add(".my_carousel-item");
-  imgItem.innerHTML = `<div class="my_carousel-item.active">
-     <img src="${currentImg}" alt="${index} image">
-  </div>`;
-  imgDiv.appendChild(imgItem);
+
+  if (index === i) {
+    let imgItem = document.createElement("div");
+    imgItem.classList.add(".my_carousel-item.active");
+    imgItem.innerHTML = `<div class="my_carousel-item.active">
+        <img src="${currentImg}" alt="${index} image">
+     </div>`;
+    imgDiv.appendChild(imgItem);
+  }
 });
+
+function next() {
+  btnDown.addEventListener("click", () => {
+    i++;
+    if (i > images.length - 1) {
+      i = 0;
+      imgItem.classList.remove(".my_carousel-item.active");
+    }
+  });
+}
+
+function previous() {
+  btnUp.addEventListener("click", () => {
+    i--;
+    if (i < 0) {
+      i = images.length - 1;
+      imgItem.classList.remove(".my_carousel-item.active");
+    }
+  });
+}
